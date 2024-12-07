@@ -1,0 +1,15 @@
+{# templates/jeu/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Jeu de Bataille Navale{% endblock %}
+
+{% block body %}
+<h1>{{ controller_name }}</h1>
+
+<p>Bienvenue dans le jeu de Bataille Navale. Prêt à jouer ?</p>
+
+{# Lien ou bouton pour commencer à jouer ou placer les navires #}
+<a href="{{ path('app_jeu_jouer_get') }}">Commencer à jouer</a>
+{# Ou ajoutez un formulaire pour placer les navires ou attaquer #}
+{% endblock %}

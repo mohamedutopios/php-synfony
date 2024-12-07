@@ -1,0 +1,28 @@
+{# templates/jeu/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Jeu de Bataille Navale{% endblock %}
+
+{% block body %}
+<h1>Jeu de Bataille Navale</h1>
+{{dump(jeu)}}
+{% if jeu_en_cours %}
+    <p>Le jeu a commencé! À votre tour de jouer.</p>
+    <form action="{{ path('app_jeu_jouer_post') }}" method="POST">
+        <div>
+            <label for="x">Coordonnée X (par exemple, de 0 à 11):</label>
+            <input type="number" id="x" name="x" min="0" max="11" required>
+        </div>
+        <div>
+            <label for="y">Coordonnée Y (par exemple, de 0 à 11):</label>
+            <input type="number" id="y" name="y" min="0" max="11" required>
+        </div>
+        <button type="submit">Attaquer</button>
+    </form>
+{% else %}
+    <p>Bienvenue dans le jeu de Bataille Navale. Prêt à commencer ?</p>
+    <a href="{{ path('app_jeu_jouer_get') }}">Démarrer le jeu</a>
+{% endif %}
+
+{% endblock %}

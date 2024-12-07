@@ -1,0 +1,14 @@
+{
+    "name": "administrateur/demo-composer",
+    "autoload": {
+        "psr-4": {
+            "Administrateur\\DemoComposer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ihab"
+        }
+    ],
+    "require": {}
+}
