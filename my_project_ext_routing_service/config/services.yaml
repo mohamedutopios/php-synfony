@@ -1,0 +1,41 @@
+# Ce fichier est le point d'entrée pour configurer vos propres services Symfony.
+# Les fichiers dans le sous-répertoire packages/ configurent vos dépendances.
+
+# Définir des paramètres globaux pour l'application,
+# qui ne changent pas en fonction de l'environnement ou de la machine.
+# Utilisés pour stocker des valeurs de configuration globales.
+parameters:
+
+services:
+
+    # Associe PostManagerInterface à son implémentation PostManager
+    #App\Service\PostManagerInterface: '@App\Service\Impl\PostManager'
+
+    # Configure la fabrique pour la session
+    Symfony\Component\HttpFoundation\Session\SessionInterface:
+        factory: [ '@session.factory', 'createSession' ]
+
+    # Configure explicitement le contrôleur PostController
+   # App\Controller\PostController:
+    #    arguments:
+     #       $postManager: '@App\Service\PostManagerInterface'
+
+    # Configuration par défaut pour les services définis dans ce fichier.
+    _defaults:
+        autowire: true      # Active l'injection automatique des dépendances dans vos services.
+        autoconfigure: true # Enregistre automatiquement vos services pour certaines fonctionnalités,
+        # comme les commandes, les abonnés aux événements, etc.
+
+    # Enregistre automatiquement toutes les classes du répertoire src/ en tant que services.
+    # Chaque classe devient un service avec un identifiant basé sur son nom complet.
+    App\:
+        resource: '../src/' # Répertoire contenant les classes à enregistrer comme services.
+        exclude:            # Liste des fichiers et répertoires à exclure de l'enregistrement automatique.
+            - '../src/DependencyInjection/' # Exclut les classes de configuration spécifiques.
+            - '../src/Entity/'             # Exclut les entités utilisées avec l'ORM (Doctrine).
+            - '../src/Kernel.php'          # Exclut le fichier Kernel, qui initialise Symfony.
+
+    # Ajouter ici des définitions spécifiques de services si nécessaire.
+    # Par exemple, pour configurer un service avec des arguments ou des options particulières.
+    # Notez que les définitions ajoutées ici remplaceront les configurations précédentes
+    # en cas de conflit (les dernières lignes priment).
