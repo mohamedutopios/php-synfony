@@ -8,17 +8,23 @@ parameters:
 
 services:
 
-    # Associe PostManagerInterface à son implémentation PostManager
-    #App\Service\PostManagerInterface: '@App\Service\Impl\PostManager'
+    # Définition des services de l'application.
 
-    # Configure la fabrique pour la session
+    # Liaison de l'interface `PostManagerInterface` à l'implémentation `PostManager`
+    App\Service\PostManagerInterface:
+        alias: App\Service\Impl\PostManager # Indique que toute injection de `PostManagerInterface` utilisera `PostManager`.
+        public: true # Rend ce service accessible publiquement, même en dehors du conteneur de dépendances.
+
+    # Configuration explicite du service `PostManager`
+    App\Service\Impl\PostManager:
+        public: true # Rend ce service public, ce qui permet de l'appeler directement via le conteneur si nécessaire.
+
+    # Configuration pour `SessionInterface` (service de Symfony pour gérer les sessions)
     Symfony\Component\HttpFoundation\Session\SessionInterface:
         factory: [ '@session.factory', 'createSession' ]
+        # Spécifie que `SessionInterface` doit être créé à l'aide de la méthode `createSession` du service `session.factory`.
+        # Cela permet à Symfony de fournir une instance de session basée sur la configuration actuelle du système.
 
-    # Configure explicitement le contrôleur PostController
-   # App\Controller\PostController:
-    #    arguments:
-     #       $postManager: '@App\Service\PostManagerInterface'
 
     # Configuration par défaut pour les services définis dans ce fichier.
     _defaults:
