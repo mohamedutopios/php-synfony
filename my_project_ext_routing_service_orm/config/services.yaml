@@ -1,0 +1,47 @@
+# Ce fichier est le point d'entrée pour configurer vos propres services Symfony.
+# Les fichiers dans le sous-répertoire packages/ configurent vos dépendances.
+
+# Définir des paramètres globaux pour l'application,
+# qui ne changent pas en fonction de l'environnement ou de la machine.
+# Utilisés pour stocker des valeurs de configuration globales.
+parameters:
+
+services:
+
+    # Définition des services de l'application.
+
+    # Liaison de l'interface `PostManagerInterface` à l'implémentation `PostManager`
+    App\Service\PostManagerInterface:
+        alias: App\Service\Impl\PostManager # Indique que toute injection de `PostManagerInterface` utilisera `PostManager`.
+        public: true # Rend ce service accessible publiquement, même en dehors du conteneur de dépendances.
+
+    # Configuration explicite du service `PostManager`
+    App\Service\Impl\PostManager:
+        public: true # Rend ce service public, ce qui permet de l'appeler directement via le conteneur si nécessaire.
+
+    # Configuration pour `SessionInterface` (service de Symfony pour gérer les sessions)
+    Symfony\Component\HttpFoundation\Session\SessionInterface:
+        factory: [ '@session.factory', 'createSession' ]
+        # Spécifie que `SessionInterface` doit être créé à l'aide de la méthode `createSession` du service `session.factory`.
+        # Cela permet à Symfony de fournir une instance de session basée sur la configuration actuelle du système.
+
+
+    # Configuration par défaut pour les services définis dans ce fichier.
+    _defaults:
+        autowire: true      # Active l'injection automatique des dépendances dans vos services.
+        autoconfigure: true # Enregistre automatiquement vos services pour certaines fonctionnalités,
+        # comme les commandes, les abonnés aux événements, etc.
+
+    # Enregistre automatiquement toutes les classes du répertoire src/ en tant que services.
+    # Chaque classe devient un service avec un identifiant basé sur son nom complet.
+    App\:
+        resource: '../src/' # Répertoire contenant les classes à enregistrer comme services.
+        exclude:            # Liste des fichiers et répertoires à exclure de l'enregistrement automatique.
+            - '../src/DependencyInjection/' # Exclut les classes de configuration spécifiques.
+            - '../src/Entity/'             # Exclut les entités utilisées avec l'ORM (Doctrine).
+            - '../src/Kernel.php'          # Exclut le fichier Kernel, qui initialise Symfony.
+
+    # Ajouter ici des définitions spécifiques de services si nécessaire.
+    # Par exemple, pour configurer un service avec des arguments ou des options particulières.
+    # Notez que les définitions ajoutées ici remplaceront les configurations précédentes
+    # en cas de conflit (les dernières lignes priment).
