@@ -1,0 +1,9 @@
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">{{ post.title }}</h2>
+        <p><strong>Category:</strong> {{ post.category.name }}</p>
+        <p>{{ post.content }}</p>
+        <p><small>Created At: {{ post.createdAt|date("Y-m-d H:i") }}</small></p>
+        <a href="{{ path('post_index') }}" class="btn btn-secondary">Back to Posts</a>
+    </div>
+</div>

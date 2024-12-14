@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">All Posts</h2>
+
+        <!-- Turbo Frame pour la liste des posts -->
+        <turbo-frame id="posts">
+            {% include 'post/_list.html.twig' %}
+        </turbo-frame>
+
+        <!-- Turbo Frame pour le formulaire de création/édition -->
+        <turbo-frame id="post-form">
+            <!-- Par défaut, chargez le formulaire de création -->
+            <a href="{{ path('post_create') }}"
+               data-turbo-frame="post-form"
+               class="btn btn-primary mt-4">Create New Post</a>
+        </turbo-frame>
+
+        <!-- Turbo Frame pour afficher les détails d'un post -->
+        <turbo-frame id="post-details">
+            <!-- Les détails seront chargés dynamiquement -->
+        </turbo-frame>
+    </div>
+{% endblock %}
