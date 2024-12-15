@@ -1,0 +1,15 @@
+<turbo-frame id="post-details">
+    <div class="card mt-4">
+        <div class="card-body">
+            <h2 class="card-title">{{ post.title }}</h2>
+            <p><strong>Category:</strong> {{ post.category.name }}</p>
+            <p>{{ post.content }}</p>
+            <p><small>Created At: {{ post.createdAt|date("Y-m-d H:i") }}</small></p>
+
+            <!-- LiveComponent pour le compteur de likes -->
+            {{ live_component('post_like', { post: post, likes: post.likes }) }}
+
+            <a href="{{ path('post_index') }}" class="btn btn-secondary mt-3">Back to Posts</a>
+        </div>
+    </div>
+</turbo-frame>
